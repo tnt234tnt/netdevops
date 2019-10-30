@@ -1,7 +1,7 @@
 mport f5.bigip
 from f5.bigip import ManagementRoot
 #连接F5设备
-mgmt = ManagementRoot('10.99.100.41', 'admin', 'Admin@123')
+mgmt = ManagementRoot('192.168.1.1', 'admin', 'admin')
 #新建POOL
 pool1 = mgmt.tm.ltm.pools.pool.create(name='pool1', partition='Common')
 #加载POOL信息
