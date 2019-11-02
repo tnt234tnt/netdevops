@@ -1,0 +1,44 @@
+language: python
+python:
+    - "2.7"
+    - "3.5"
+sudo: true
+env:
+  global:
+    - REPO="f5-cccl"
+    - PKG_VERSION=$(python -c "import f5_cccl; print f5_cccl.__version__")
+    - MARATHON_BIGIP_CTLR_COMMIT_ISH=a7b291ec13099b51da02f414cff3a7d5632d56a3
+    - K8S_BIGIP_CTLR_COMMIT_ISH=dc8b4d608ec37226ce3c25fc804eacb4441c75eb
+services:
+   - docker
+before_install:
+  - git config --global user.email "OpenStack_TravisCI@f5.com"
+  - git config --global user.name "Travis F5 Openstack"
+install:
+  - pip install tox
+  - pip install -r requirements.test.txt
+  - pip install -r requirements.docs.txt
+  - python ./setup.py install
+script:
+  - tox -e style
+  - tox -e unit
+# For security, travis CI not provide env vars on fork PRs.
+# So we only run coverage when the env var is present at merge.
+# https://docs.travis-ci.com/user/pull-requests/#Pull-Requests-and-Security-Restrictions
+  - if [ "$COVERALLS_REPO_TOKEN" != "" ]; then tox -e coverage; fi
+  - tox -e functional
+deploy:
+  # push marathon dev-image for nightly regression tests
+  - provider: script
+    skip_cleanup: true
+    script: ./build-tools/system-test-img.sh F5Networks/marathon-bigip-ctlr $MARATHON_BIGIP_CTLR_COMMIT_ISH ./build-tools/build-runtime-images.sh $DOCKER_NAMESPACE
+    on:
+      python: "3.5"
+      all_branches: true
+  # push k8s dev-image for nightly regression tests
+  - provider: script
+    skip_cleanup: true
+    script: ./build-tools/system-test-img.sh F5Networks/k8s-bigip-ctlr $K8S_BIGIP_CTLR_COMMIT_ISH "make prod" $DOCKER_NAMESPACE
+    on:
+      python: "3.5"
+      all_branches: true
