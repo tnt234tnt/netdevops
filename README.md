@@ -22,4 +22,5 @@ linux git
 开始制作F5的EXCEL文档，进行F5的自动化配置尝试。
 
 #day 4 2019.11.03
-终于把F5人新建POOL、MEMBER、VS搞定了，全部用POSTMAN一个一个测试，官方API并没有什么鸟用，Orz!!!下一步开始写新建3个类型的类！！！
+
+终于把F5的新建POOL、MEMBER、VS搞定了，全部用POSTMAN一个一个测试，官方API并没有什么鸟用，Orz!!!下一步开始写新建3个类型的类！！！
