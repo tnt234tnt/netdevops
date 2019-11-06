@@ -1,7 +1,7 @@
 import f5.bigip
 from f5.bigip import ManagementRoot
 #连接F5设备
-mgmt = f5.bigip.ManagementRoot('10.99.100.41', 'admin', 'Admin@123')
+mgmt = f5.bigip.ManagementRoot('10.99.100.40', 'admin', 'Admin@123')
 #新建POOL
 pool1 = mgmt.tm.ltm.pools.pool.create(name='pool9',monitor = 'tcp',description="This is My Python pool!",partition='Common')
 #加载POOL信息
@@ -35,6 +35,8 @@ m11 = pool_1.members_s.members.load(partition='Common', name='192.168.101.50:80'
 m11.name
 #修改MEMBER状态
 m11.modify(session = 'user-enabled')
+m11.modify(session = 'user-disabled')
+m11.update
 
 #修改VS状态
 vs1 = mgmt.tm.ltm.virtuals.virtual.create(name='vs1',partition='Common',pool = 'pool1',destination = '195.1.1.1:80',ipProtocol = 'tcp',mask = '255.255.255.255')
@@ -43,5 +45,9 @@ vs_1 = mgmt.tm.ltm.virtuals.virtual.load(name = 'vs1')
 vs_1.modify(enabled = 'Ture') 
 #禁用状态
 vs_1.modify(disabled = 'Ture') 
+
+#删除VS
+vs5pro = mgmt.tm.ltm.virtuals.virtual.load(name = 'vs5')
+vs5pro.update
 
 

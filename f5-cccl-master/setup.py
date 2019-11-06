@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 
+#from pip.req import parse_requirements as parse_reqs
 from pip.req import parse_requirements as parse_reqs
 from setuptools import setup
 from setuptools import find_packages
