@@ -1,7 +1,7 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 –*-
 #F5-LTM类，用于新建POOL,Member,VS。
-import f5.bigip
-from f5.bigip import ManagementRoot
-import class_f5conn
+from classfile import *
 
 class F5LTMClass(F5CONNClass):
 #链接F5设备，并对函数进行赋值；Deviceip为设备IP地址，Username为设备用户名，Password为设备密码。默认端口号为：443.
@@ -144,5 +144,3 @@ class F5LTMClass(F5CONNClass):
                         print(">>>控制参数错误，请重新输入，参数为enable或disable！！！")
             else:
                 return
-OL,Member,VS。
-

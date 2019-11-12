@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 –*-
 #该函数用于新建MONITOR，查看MONITOR状态等。
 import f5.bigip
 from f5.bigip import ManagementRoot
